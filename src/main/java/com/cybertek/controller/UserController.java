@@ -34,13 +34,8 @@ public class UserController {
 
  @PostMapping("create")
  public String insertUser( UserDTO user, Model model){
-
         userService.save(user);
-
-        model.addAttribute("user",new UserDTO());
-        model.addAttribute("roles",roleService.findAll());
-        model.addAttribute("users",userService.findAll());
-        return "/user/create";
+        return "redirect:/user/create";
  }
 
  @GetMapping("/update/{username}")
@@ -59,10 +54,12 @@ public class UserController {
 
         userService.update(user);
 
-     model.addAttribute("user", new UserDTO());
-     model.addAttribute("roles", roleService.findAll());
-     model.addAttribute("users", userService.findAll());
-
-        return "/user/create";
+        return "redirect:/user/create";
  }
+ @GetMapping("/delete/{username}")
+        public String deleteUser(@PathVariable("username") String username){
+        userService.deleteById(username);
+        return"redirect:/user/create";
+ }
+
 }
